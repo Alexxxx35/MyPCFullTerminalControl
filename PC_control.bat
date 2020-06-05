@@ -707,12 +707,13 @@ goto :process_control_console
 tasklist
 pause
 cls
-goto begin1
+goto :process_control_console
 
 :kill_task
 echo ***** SELECT A PROCESS TO KILL *****
+tasklist
 set /P process=process :
-taskkill %process%
+taskkill /IM %process%
 echo ... %process% killed ...
 pause
 cls
