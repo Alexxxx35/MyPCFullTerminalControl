@@ -117,7 +117,7 @@ if %choice%==6 goto :Video_games_console
 if %choice%==7 EXIT
 )
 echo ERROR %choice% is not configured!
-goto :main_programm
+cls & goto :main_programm
 
 :Navigation_console
 echo  ******************************************************
@@ -147,7 +147,7 @@ if %choice%==5 goto :move_in0
 if %choice%==6 goto :Video_games_console
 if %choice%==7 goto :arborescence
 if %choice%==8 goto :Programmation_setup
-if %choice%==9 goto :main_programm
+if %choice%==9 cls & goto :main_programm
 if %choice%==10 EXIT
 )
 echo ERROR %choice% is not configured!
@@ -402,7 +402,7 @@ if %choice%==4 goto :test_connection
 if %choice%==5 goto :command_line_windows
 if %choice%==6 goto :file_modifications
 if %choice%==7 EXIT
-if %choice%==8 goto :main_programm
+if %choice%==8 cls & goto :main_programm
 )
 echo ERROR %choice% is not configured!
 goto :informations_console
@@ -469,6 +469,7 @@ echo 13 : Move files to another folder
 echo 14 : Copy directories and files between two dates to anoter location (SAVE OF CONTENT)
 echo 15 : EXIT
 echo 16 : BACK
+echo 17 : BACK to main console
 set /p choice=Make a choice :
 (
 if not %choice%=='' set choice=%choice:~0,1%
@@ -488,6 +489,7 @@ if %choice%==13 goto :cut_files
 if %choice%==14 goto :target_copy
 if %choice%==15 EXIT
 if %choice%==16 goto :informations_console
+if %choice%==17 cls & goto :main_programm
 )
 echo ERROR %choice% is not configured!
 goto :file_modifications
@@ -691,7 +693,7 @@ if %choice%==1 goto :show_tasks
 if %choice%==2 goto :kill_task
 if %choice%==3 goto :task_manager
 if %choice%==4 EXIT
-if %choice%==5 goto :main_programm
+if %choice%==5 cls & goto :main_programm
 )
 echo ERROR %choice% is not configured!
 goto :process_control_console
@@ -717,7 +719,7 @@ taskkill /IM %process%
 echo ... %process% killed ...
 pause
 cls
-goto :main_programm
+cls & goto :main_programm
 
 :closing_computer_console
 echo  ******************************************************
@@ -745,7 +747,7 @@ if %choice%==1 goto :close_session
 if %choice%==2 goto :shutdown_
 if %choice%==3 goto :shutdown_after_download
 if %choice%==4 goto :shut_and_Restart
-if %choice%==5 goto :main_programm
+if %choice%==5 cls & goto :main_programm
 if %choice%==6 goto :need_help
 if %choice%==7 goto :end
 if %choice%==8 goto :command_line_windows2
