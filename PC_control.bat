@@ -13,7 +13,7 @@ ver | find /i "version 10.0.10240" > nul && if %errorlevel%==0 set VERSIONWINDOW
 ver | find /i "version 6.4." > nul && if %errorlevel%==0 set VERSIONWINDOWS=Windows 10 Technical Preview
 echo OPERATING SYSTEM Windows version: %VERSIONWINDOWS%
 echo Started: %date% %time%
-echo ALEX_SOFTWARE Version 1.0
+echo ALEX_SOFTWARE Version 1.3
 echo 2020 ALEX_SOFTWARE Tous droits réservés.
 echo Press F11 for full screen mode
 
@@ -623,7 +623,21 @@ goto :file_modifications
 :create_folder/file
 set /P path=Choose the path where to create the new folder/file:
 set /P object=Choose a name for the new folder/file:
-mkdir %path%%object%
+set /P ext=Choose an extention if it's a file or pass:
+if "%ext%" == "" goto :create_folder else goto :create_file
+:create_file
+type nul > %object%.%ext%
+pause
+echo file created ....
+timeout /T 1 /NOBREAK
+cd %path%
+dir
+pause
+cls
+goto :file_modifications
+:create_folder
+md %object%
+pause
 echo folder/file created ....
 timeout /T 1 /NOBREAK
 cd %path%
@@ -656,7 +670,7 @@ goto :file_modifications
 :move_in
 dir
 set /P folder_location=Choose the location to go in:
-(if "%var%" equ "" echo ERROR empty location .... & goto :file_modifications)
+if "%folder_location%" equ "" echo ERROR empty location .... & goto :file_modifications
 cd %folder_location%
 echo moved in %folder_location% ....
 echo loading new location ....
