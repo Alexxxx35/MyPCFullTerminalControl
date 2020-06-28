@@ -188,7 +188,7 @@ echo Do you need more informations?
 echo Y/N?
 set /P choice=Make a choice :
 (
-if not %choice%=="" set choice=%choice:~0,1%
+rem if not %choice%=="" set choice=%choice:~0,1%
 if %choice%==Y goto :more_info
 if %choice%==y goto :more_info
 if %choice%==N goto :Navigation_console
@@ -206,7 +206,7 @@ echo Do you want to make a repository/file modification inside this repo?
 echo Y/N?
 set /P choice=Make a choice :
 (
-if not %choice%=="" set choice=%choice:~0,1%
+rem if not %choice%=="" set choice=%choice:~0,1%
 if %choice%==Y goto :file_modifications
 if %choice%==y goto :file_modifications
 if %choice%==N cls & goto :informations_console
@@ -281,7 +281,7 @@ echo 16 : BACK
 echo 17 : EXIT
 set /P choice=Make a choice :
 (
-if not %choice%=="" set choice=%choice:~0,2%
+rem if not %choice%=="" set choice=%choice:~0,2%
 if %choice%==1 goto :scp
 if %choice%==2 goto :game1
 if %choice%==3 goto :game2
@@ -404,7 +404,7 @@ echo 7 : EXIT
 echo 8 : BACK
 set /P choice=Make a choice :
 (
-if not %choice%=="" set choice=%choice:~0,1%
+rem if not %choice%=="" set choice=%choice:~0,1%
 if %choice%==1 goto :show_material_informations
 if %choice%==2 goto :show_network_informations
 if %choice%==3 goto :device_driver
@@ -483,7 +483,7 @@ echo 16 : BACK
 echo 17 : BACK to main console
 set /p choice=Make a choice :
 (
-if not %choice%=="" set choice=%choice:~0,1%
+rem if not %choice%=="" set choice=%choice:~0,1%
 if %choice%==1 goto :create_folder/file
 if %choice%==2 goto :delete_folder/file
 if %choice%==3 goto :rename_folder/file
@@ -721,7 +721,7 @@ echo 4 : EXIT
 echo 5 : BACK
 set /P choice=Make a choice :
 (
-if not %choice%=="" set choice=%choice:~0,1%
+rem if not %choice%=="" set choice=%choice:~0,1%
 if %choice%==1 goto :show_tasks
 if %choice%==2 goto :kill_task
 if %choice%==3 goto :task_manager
@@ -776,7 +776,7 @@ echo 7 : EXIT
 echo 8 : CMD
 set /P choice=Make a choice :
 (
-if not %choice%=="" set choice=%choice:~0,1%
+rem if not %choice%=="" set choice=%choice:~0,1%
 if %choice%==1 goto :close_session
 if %choice%==2 goto :shutdown_
 if %choice%==3 goto :shutdown_after_download
