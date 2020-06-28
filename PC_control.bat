@@ -1,5 +1,6 @@
 @echo off
 title=ALEX_SOFTWARE
+set win=c:\windows\system32\
 :launch
 echo  ******************************************************
 echo  ***************** /\ MYSOFTWARE /\ *******************
@@ -13,7 +14,7 @@ ver | find /i "version 10.0.10240" > nul && if %errorlevel%==0 set VERSIONWINDOW
 ver | find /i "version 6.4." > nul && if %errorlevel%==0 set VERSIONWINDOWS=Windows 10 Technical Preview
 echo OPERATING SYSTEM Windows version: %VERSIONWINDOWS%
 echo Started: %date% %time%
-echo ALEX_SOFTWARE Version 1.3
+echo ALEX_SOFTWARE Version 1.4
 echo 2020 ALEX_SOFTWARE Tous droits réservés.
 echo Press F11 for full screen mode
 
@@ -89,9 +90,12 @@ echo			                                                `:/y+:`   . ```.:/+/:/++`
 echo			                                                        `y/////+/:+//:`                             
 echo			                                                         ://+++//-               
 
-cd D:
+path=D:
+%path%
+echo %path%
 pause
-:main_programm
+:main_program
+set choice=""
 echo  ******************************************************
 echo  ***************** /MAIN CONSOLE\ *********************
 echo  ******************************************************
@@ -107,7 +111,8 @@ echo 5 : /SHUTDOWN CONTROL CONSOLE\
 echo 6 : /VIDEO GAMES CONSOLE\
 echo 7 : EXIT
 set /P choice=Make a choice :
-(
+rem if not %choice%=="" set choice=%choice:~0,1%
+if "%choice%"=="" goto :main_program
 if %choice%==1 goto :Navigation_console
 if %choice%==2 goto :informations_console
 if %choice%==3 goto :file_modifications
@@ -115,11 +120,12 @@ if %choice%==4 goto :process_control_console
 if %choice%==5 goto :closing_computer_console
 if %choice%==6 goto :Video_games_console
 if %choice%==7 EXIT
-)
+
 echo ERROR %choice% is not configured!
-cls & goto :main_programm
+goto :main_program
 
 :Navigation_console
+set choice=""
 echo  ******************************************************
 echo  ************* /NAVIGATION CONSOLE\ *******************
 echo  ******************************************************
@@ -137,8 +143,9 @@ echo 8 : PROGRAMMATION SETUP
 echo 9 : BACK
 echo 10 : EXIT
 set /P choice=Make a choice :
-(
-if not %choice%=='' set choice=%choice:~0,1%
+
+if "%choice%"=="" goto :Navigation_console
+rem if not %choice%=="" set choice=%choice:~0,1%
 if %choice%==1 goto :website_nav
 if %choice%==2 goto :software_nav
 if %choice%==3 start CMD & goto :Navigation_console
@@ -147,9 +154,9 @@ if %choice%==5 goto :move_in0
 if %choice%==6 goto :Video_games_console
 if %choice%==7 goto :arborescence
 if %choice%==8 goto :Programmation_setup
-if %choice%==9 cls & goto :main_programm
+if %choice%==9 cls & goto :main_program
 if %choice%==10 EXIT
-)
+
 echo ERROR %choice% is not configured!
 goto :Navigation_console
 
@@ -174,14 +181,14 @@ echo WARNINGS THIS WORKS MAINLY FOR DISK D: !!!!
 dir
 set /P repo=Choose the repo where the tree will be loaded:
 echo loading repository tree ....
-timeout /T 2 /NOBREAK
+@timeout /T 2 /NOBREAK@
 tree %repo%
 pause
 echo Do you need more informations?
 echo Y/N?
 set /P choice=Make a choice :
 (
-if not %choice%=='' set choice=%choice:~0,1%
+if not %choice%=="" set choice=%choice:~0,1%
 if %choice%==Y goto :more_info
 if %choice%==y goto :more_info
 if %choice%==N goto :Navigation_console
@@ -193,13 +200,13 @@ goto:arborescence
 :more_info
 cd D:\%repo%
 echo loading repository configuration ....
-timeout /T 2 /NOBREAK
+@timeout /T 2 /NOBREAK@
 dir
 echo Do you want to make a repository/file modification inside this repo?
 echo Y/N?
 set /P choice=Make a choice :
 (
-if not %choice%=='' set choice=%choice:~0,1%
+if not %choice%=="" set choice=%choice:~0,1%
 if %choice%==Y goto :file_modifications
 if %choice%==y goto :file_modifications
 if %choice%==N cls & goto :informations_console
@@ -210,13 +217,14 @@ goto :more_info
 
 :move_in0
 dir
+echo %path%
 set /P folder_location=Choose the location to go in:
 (if "%folder_location%" equ "" echo ERROR empty location .... & goto :Navigation_console)
 cd %folder_location%
 cd %folder_location%
 echo moved in %folder_location% ....
 echo loading new location ....
-timeout /T 1 /NOBREAK
+@timeout /T 1 /NOBREAK@
 echo new location loaded ....
 dir
 pause
@@ -227,7 +235,7 @@ set /P website=Choose a website to launch without extentions:
 (if "%website%" equ "" echo VALUEERROR empty name .... & goto :Navigation_console)
 set website=www.%website%.com
 echo loading %website% ....
-timeout /T 1 /NOBREAK
+@timeout /T 1 /NOBREAK@
 start %website%
 echo %website% launched ....
 set website=""
@@ -239,13 +247,14 @@ dir
 set /P software_path=Choose the path of the excecutable:
 start %software_path%
 echo loading %software_path% ....
-timeout /T 1 /NOBREAK
+@timeout /T 1 /NOBREAK@
 echo %software_path% loaded ....
 pause
 cls
 goto :Navigation_console
 
 :Video_games_console
+set choice=""
 echo  ******************************************************
 echo  ************* /VIDEO GAMES LAUNCHER\ *******************
 echo  ******************************************************
@@ -272,7 +281,7 @@ echo 16 : BACK
 echo 17 : EXIT
 set /P choice=Make a choice :
 (
-if not %choice%=='' set choice=%choice:~0,1%
+if not %choice%=="" set choice=%choice:~0,2%
 if %choice%==1 goto :scp
 if %choice%==2 goto :game1
 if %choice%==3 goto :game2
@@ -378,6 +387,7 @@ cls
 goto :Video_games_console
 
 :informations_console
+set choice=""
 echo  ******************************************************
 echo  ********** /MATERIAL INFORMATION CONSOLE\ ************
 echo  ******************************************************
@@ -394,7 +404,7 @@ echo 7 : EXIT
 echo 8 : BACK
 set /P choice=Make a choice :
 (
-if not %choice%=='' set choice=%choice:~0,1%
+if not %choice%=="" set choice=%choice:~0,1%
 if %choice%==1 goto :show_material_informations
 if %choice%==2 goto :show_network_informations
 if %choice%==3 goto :device_driver
@@ -402,7 +412,7 @@ if %choice%==4 goto :test_connection
 if %choice%==5 goto :command_line_windows
 if %choice%==6 goto :file_modifications
 if %choice%==7 EXIT
-if %choice%==8 cls & goto :main_programm
+if %choice%==8 cls & goto :main_program
 )
 echo ERROR %choice% is not configured!
 goto :informations_console
@@ -416,7 +426,7 @@ goto :informations_console
 
 :show_material_informations
 echo loading components data ....
-timeout /T 1 /NOBREAK
+@timeout /T 1 /NOBREAK@
 systeminfo
 pause
 cls
@@ -424,7 +434,7 @@ goto :informations_console
 
 :show_network_informations
 echo loading network data ....
-timeout /T 1 /NOBREAK
+@timeout /T 1 /NOBREAK@
 ipconfig
 pause
 cls
@@ -432,7 +442,7 @@ goto :informations_console
 
 :device_driver
 echo loading device driver ....
-timeout /T 1 /NOBREAK
+@timeout /T 1 /NOBREAK@
 DRIVERQUERY
 pause
 cls
@@ -447,6 +457,7 @@ cls
 goto :informations_console
 
 :file_modifications
+set choice=""
 echo  ******************************************************
 echo  ************* /DATA MODIFICATION CONSOLE\ *****************
 echo  ******************************************************
@@ -472,7 +483,7 @@ echo 16 : BACK
 echo 17 : BACK to main console
 set /p choice=Make a choice :
 (
-if not %choice%=='' set choice=%choice:~0,1%
+if not %choice%=="" set choice=%choice:~0,1%
 if %choice%==1 goto :create_folder/file
 if %choice%==2 goto :delete_folder/file
 if %choice%==3 goto :rename_folder/file
@@ -489,25 +500,31 @@ if %choice%==13 goto :cut_files
 if %choice%==14 goto :target_copy
 if %choice%==15 EXIT
 if %choice%==16 goto :informations_console
-if %choice%==17 cls & goto :main_programm
+if %choice%==17 cls & goto :main_program
 )
 echo ERROR %choice% is not configured!
 goto :file_modifications
 
 :search_data
 echo %path%
-set /P file_path=Enter the location of your file:
+dir
+set /P file_path=Enter the location of your file or pass:
+(
+if "%file_path%" == "" (echo %path%) else (cd %file_path% & pause)
+)
 set /P file_name=Enter the name of your file:
-set /P file_extention=Enter the extention of your file:
 set /P str_search=Enter the data str to search:
-FIND /C %file_path%%file_name%%file_extention% "%str_search%"
-FIND /N %file_path%%file_name%%file_extention% "%str_search%"
-FIND /I %file_path%%file_name%%file_extention% "%str_search%"
+%win%FIND /C "%str_search%" %file_path%%file_name%
+%win%FIND /N "%str_search%" %file_path%%file_name% 
+%win%FIND /I "%str_search%" %file_path%%file_name%
+pause
+cls
+goto :file_modifications
 
 :file_edition
 set /p object_location=Choose the path of folder/file to open:
 echo loading the data of %object_location% ....
-timeout /T 1 /NOBREAK
+@timeout /T 1 /NOBREAK@
 start %object_location%
 echo data of %object_location% loaded ....
 pause
@@ -534,11 +551,11 @@ set /P encoding=Select an encoding before opening data:
 echo selection of encoding ....
 chcp %encoding%
 echo %encoding% chosen ....
-timeout /T 1 /NOBREAK
+@timeout /T 1 /NOBREAK@
 dir
 set /p object_location=Choose the path of folder/file to open:
 echo loading the data of %object_location% ....
-timeout /T 1 /NOBREAK
+@timeout /T 1 /NOBREAK@
 more %object_location%
 echo data of %object_location% loaded ....
 pause
@@ -553,7 +570,7 @@ set /P older_date=Enter the date of the oldest data you want to copy:
 set /P newer_date=Enter the date of the newest data you want to copy:
 ROBOCOPY %folder_path% %folder_path_out% /MOVE /MAXAGE:%older_date% /MINAGE:%newer_date%
 echo Copy of data between %older_date% and %newer_date% performed ....
-timeout /T 1 /NOBREAK
+@timeout /T 1 /NOBREAK@
 cd %folder_path_out%
 dir
 pause
@@ -567,7 +584,7 @@ set /P folder_path_out=Enter the new location of your folder with files to move:
 set /P file_names=Enter the names of your folders with space between them:
 ROBOCOPY %folder_path% %folder_path_out% %folder_name% /MOVE
 echo Copy of folders with files performed ....
-timeout /T 1 /NOBREAK
+@timeout /T 1 /NOBREAK@
 cd %folder_path_out%
 dir
 pause
@@ -579,9 +596,9 @@ dir
 set /P folder_path=Enter the location of your folder which contains the files to cut:
 set /P folder_path_out=Enter the new location of the folder which will contain the files to cut:
 set /P file_names=Enter the names of your files with extentions with space between several files:
-ROBOCOPY %folder_path% %folder_path_out% %file_names% /MOV
+%win%ROBOCOPY %folder_path% %folder_path_out% %file_names% /MOV
 echo %file_names% moved ....
-timeout /T 1 /NOBREAK
+@timeout /T 1 /NOBREAK@
 cd %folder_path_out%
 dir
 pause
@@ -594,9 +611,9 @@ set /P file_path=Enter the location of your folder/file:
 set /P file_path_out=Enter the new location of your folder/file:
 set /P file_name=Enter the name of your folder/file without extention:
 set /P file_extention=Enter the extention of your folder/file:
-COPY %file_path%%file_name%%file_extention% %file_path_out%
+%win%COPY %file_path%%file_name%%file_extention% %file_path_out%
 echo Copy of folder/file performed ....
-timeout /T 1 /NOBREAK
+@timeout /T 1 /NOBREAK@
 cd %file_path_out%
 dir
 pause
@@ -616,7 +633,7 @@ set /P user=Choose the name of the user who is concerned by the rights
 set /P value=Choose the right to grant N/R/W/F:
 CACLS %folderpath% /T /P %user%:%value%
 echo modification of admin rights done ....
-timeout /T 1 /NOBREAK
+@timeout /T 1 /NOBREAK@
 cls
 goto :file_modifications
 
@@ -629,7 +646,7 @@ if "%ext%" == "" goto :create_folder else goto :create_file
 type nul > %object%.%ext%
 pause
 echo file created ....
-timeout /T 1 /NOBREAK
+@timeout /T 1 /NOBREAK@
 cd %path%
 dir
 pause
@@ -639,7 +656,7 @@ goto :file_modifications
 md %object%
 pause
 echo folder/file created ....
-timeout /T 1 /NOBREAK
+@timeout /T 1 /NOBREAK@
 cd %path%
 dir
 pause
@@ -650,7 +667,7 @@ goto :file_modifications
 set /P object=Choose the folder/file name to delete:
 rmdir %object%
 echo folder/file deleted ....
-timeout /T 1 /NOBREAK
+@timeout /T 1 /NOBREAK@
 dir
 pause
 cls
@@ -661,7 +678,7 @@ set /P object_in=Choose the path with folder/file to rename:
 set /P object_out=Choose the new path with folder/file:
 ren %object_in% %object_out%
 echo folder/file renamed ....
-timeout /T 1 /NOBREAK
+@timeout /T 1 /NOBREAK@
 dir
 pause
 cls
@@ -669,12 +686,13 @@ goto :file_modifications
 
 :move_in
 dir
+echo %path%
 set /P folder_location=Choose the location to go in:
 if "%folder_location%" equ "" echo ERROR empty location .... & goto :file_modifications
 cd %folder_location%
 echo moved in %folder_location% ....
 echo loading new location ....
-timeout /T 1 /NOBREAK
+@timeout /T 1 /NOBREAK
 dir
 pause
 goto :file_modifications
@@ -687,6 +705,7 @@ cls
 goto :file_modifications
 
 :process_control_console
+set choice=""
 echo  ******************************************************
 echo  ************ /PROCESS CONTROL CONSOLE\ **************
 echo  ******************************************************
@@ -702,12 +721,12 @@ echo 4 : EXIT
 echo 5 : BACK
 set /P choice=Make a choice :
 (
-if not %choice%=='' set choice=%choice:~0,1%
+if not %choice%=="" set choice=%choice:~0,1%
 if %choice%==1 goto :show_tasks
 if %choice%==2 goto :kill_task
 if %choice%==3 goto :task_manager
 if %choice%==4 EXIT
-if %choice%==5 cls & goto :main_programm
+if %choice%==5 cls & goto :main_program
 )
 echo ERROR %choice% is not configured!
 goto :process_control_console
@@ -733,9 +752,10 @@ taskkill /IM %process%
 echo ... %process% killed ...
 pause
 cls
-cls & goto :main_programm
+cls & goto :main_program
 
 :closing_computer_console
+set choice=""
 echo  ******************************************************
 echo  *********** /SHUTDOWN CONTROL CONSOLE\ **************
 echo  ******************************************************
@@ -756,12 +776,12 @@ echo 7 : EXIT
 echo 8 : CMD
 set /P choice=Make a choice :
 (
-if not %choice%=='' set choice=%choice:~0,1%
+if not %choice%=="" set choice=%choice:~0,1%
 if %choice%==1 goto :close_session
 if %choice%==2 goto :shutdown_
 if %choice%==3 goto :shutdown_after_download
 if %choice%==4 goto :shut_and_Restart
-if %choice%==5 cls & goto :main_programm
+if %choice%==5 cls & goto :main_program
 if %choice%==6 goto :need_help
 if %choice%==7 goto :end
 if %choice%==8 goto :command_line_windows2
@@ -774,7 +794,7 @@ echo the command_line has been launched ....
 start CMD
 pause
 cls
-goto:main_programm
+goto:main_program
 
 :close_session
 echo CLOSING SESSION....
@@ -793,7 +813,7 @@ set /A time_in_hours=%time_in_seconds%/3600
 shutdown -s -f -t %time_in_seconds%
 echo instruction launched ....
 echo WARNING! computer is closing in %time_in_hours% ....
-timeout /T 3 /NOBREAK
+@timeout /T 3 /NOBREAK@
 goto :end
 
 :shut_and_Restart
