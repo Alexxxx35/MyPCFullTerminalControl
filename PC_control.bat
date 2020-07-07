@@ -1,5 +1,6 @@
 @echo off
 title=ALEX_SOFTWARE
+set py=%python%
 set win=c:\windows\system32\
 :launch
 echo  ******************************************************
@@ -14,11 +15,11 @@ ver | find /i "version 10.0.10240" > nul && if %errorlevel%==0 set VERSIONWINDOW
 ver | find /i "version 6.4." > nul && if %errorlevel%==0 set VERSIONWINDOWS=Windows 10 Technical Preview
 echo OPERATING SYSTEM Windows version: %VERSIONWINDOWS%
 echo Started: %date% %time%
-echo ALEX_SOFTWARE Version 1.4
+echo ALEX_SOFTWARE Version 1.5
 echo 2020 ALEX_SOFTWARE Tous droits réservés.
 echo Press F11 for full screen mode
 
-@timeout /T 2 /NOBREAK
+%win%timeout /T 2 /NOBREAK
 @rem mode con: cols=250 lines=90
 @rem <nul: set /p Password=<.tmp.txt
 @rem for /f "delims=" %%i in ('cscript /nologo getpwd.vbs') do set passwd=%%i
@@ -166,14 +167,13 @@ start www.openclassroom.com
 start www.youtube.com
 set space_path="PyCharm Community Edition 2019.3.2"
 set space_path2="Sublime Text 3"
+echo %py%
+start %py%
 start D:\%space_path2%\sublime_text.exe
-start D:\%space_path%\bin\pycharm64.exe
-start python
+rem start D:\%space_path%\bin\pycharm64.exe
 echo setup loaded ....
 pause
 goto :Navigation_console
-
-
 
 
 :arborescence
@@ -181,7 +181,7 @@ echo WARNINGS THIS WORKS MAINLY FOR DISK D: !!!!
 dir
 set /P repo=Choose the repo where the tree will be loaded:
 echo loading repository tree ....
-@timeout /T 2 /NOBREAK@
+%win%timeout /T 2 /NOBREAK
 tree %repo%
 pause
 echo Do you need more informations?
@@ -200,7 +200,7 @@ goto:arborescence
 :more_info
 cd D:\%repo%
 echo loading repository configuration ....
-@timeout /T 2 /NOBREAK@
+%win%timeout /T 2 /NOBREAK
 dir
 echo Do you want to make a repository/file modification inside this repo?
 echo Y/N?
@@ -224,7 +224,7 @@ cd %folder_location%
 cd %folder_location%
 echo moved in %folder_location% ....
 echo loading new location ....
-@timeout /T 1 /NOBREAK@
+%win%timeout /T 1 /NOBREAK
 echo new location loaded ....
 dir
 pause
@@ -235,7 +235,7 @@ set /P website=Choose a website to launch without extentions:
 (if "%website%" equ "" echo VALUEERROR empty name .... & goto :Navigation_console)
 set website=www.%website%.com
 echo loading %website% ....
-@timeout /T 1 /NOBREAK@
+%win%timeout /T 1 /NOBREAK
 start %website%
 echo %website% launched ....
 set website=""
@@ -247,7 +247,7 @@ dir
 set /P software_path=Choose the path of the excecutable:
 start %software_path%
 echo loading %software_path% ....
-@timeout /T 1 /NOBREAK@
+%win%timeout /T 1 /NOBREAK
 echo %software_path% loaded ....
 pause
 cls
@@ -426,7 +426,7 @@ goto :informations_console
 
 :show_material_informations
 echo loading components data ....
-@timeout /T 1 /NOBREAK@
+%win%timeout /T 1 /NOBREAK
 systeminfo
 pause
 cls
@@ -434,7 +434,7 @@ goto :informations_console
 
 :show_network_informations
 echo loading network data ....
-@timeout /T 1 /NOBREAK@
+%win%timeout /T 1 /NOBREAK
 ipconfig
 pause
 cls
@@ -442,7 +442,7 @@ goto :informations_console
 
 :device_driver
 echo loading device driver ....
-@timeout /T 1 /NOBREAK@
+%win%timeout /T 1 /NOBREAK
 DRIVERQUERY
 pause
 cls
@@ -524,7 +524,7 @@ goto :file_modifications
 :file_edition
 set /p object_location=Choose the path of folder/file to open:
 echo loading the data of %object_location% ....
-@timeout /T 1 /NOBREAK@
+%win%timeout /T 1 /NOBREAK
 start %object_location%
 echo data of %object_location% loaded ....
 pause
@@ -551,11 +551,11 @@ set /P encoding=Select an encoding before opening data:
 echo selection of encoding ....
 chcp %encoding%
 echo %encoding% chosen ....
-@timeout /T 1 /NOBREAK@
+%win%timeout /T 1 /NOBREAK
 dir
 set /p object_location=Choose the path of folder/file to open:
 echo loading the data of %object_location% ....
-@timeout /T 1 /NOBREAK@
+%win%timeout /T 1 /NOBREAK
 more %object_location%
 echo data of %object_location% loaded ....
 pause
@@ -570,7 +570,7 @@ set /P older_date=Enter the date of the oldest data you want to copy:
 set /P newer_date=Enter the date of the newest data you want to copy:
 ROBOCOPY %folder_path% %folder_path_out% /MOVE /MAXAGE:%older_date% /MINAGE:%newer_date%
 echo Copy of data between %older_date% and %newer_date% performed ....
-@timeout /T 1 /NOBREAK@
+%win%timeout /T 1 /NOBREAK
 cd %folder_path_out%
 dir
 pause
@@ -584,7 +584,7 @@ set /P folder_path_out=Enter the new location of your folder with files to move:
 set /P file_names=Enter the names of your folders with space between them:
 ROBOCOPY %folder_path% %folder_path_out% %folder_name% /MOVE
 echo Copy of folders with files performed ....
-@timeout /T 1 /NOBREAK@
+%win%timeout /T 1 /NOBREAK
 cd %folder_path_out%
 dir
 pause
@@ -598,7 +598,7 @@ set /P folder_path_out=Enter the new location of the folder which will contain t
 set /P file_names=Enter the names of your files with extentions with space between several files:
 %win%ROBOCOPY %folder_path% %folder_path_out% %file_names% /MOV
 echo %file_names% moved ....
-@timeout /T 1 /NOBREAK@
+%win%timeout /T 1 /NOBREAK
 cd %folder_path_out%
 dir
 pause
@@ -613,7 +613,7 @@ set /P file_name=Enter the name of your folder/file without extention:
 set /P file_extention=Enter the extention of your folder/file:
 %win%COPY %file_path%%file_name%%file_extention% %file_path_out%
 echo Copy of folder/file performed ....
-@timeout /T 1 /NOBREAK@
+%win%timeout /T 1 /NOBREAK
 cd %file_path_out%
 dir
 pause
@@ -633,20 +633,20 @@ set /P user=Choose the name of the user who is concerned by the rights
 set /P value=Choose the right to grant N/R/W/F:
 CACLS %folderpath% /T /P %user%:%value%
 echo modification of admin rights done ....
-@timeout /T 1 /NOBREAK@
+%win%timeout /T 1 /NOBREAK
 cls
 goto :file_modifications
 
 :create_folder/file
 set /P path=Choose the path where to create the new folder/file:
-set /P object=Choose a name for the new folder/file:
+set /P object=Choose a name for the new folder/file (without extention):
 set /P ext=Choose an extention if it's a file or pass:
 if "%ext%" == "" goto :create_folder else goto :create_file
 :create_file
 type nul > %object%.%ext%
 pause
 echo file created ....
-@timeout /T 1 /NOBREAK@
+%win%timeout /T 1 /NOBREAK
 cd %path%
 dir
 pause
@@ -656,7 +656,7 @@ goto :file_modifications
 md %object%
 pause
 echo folder/file created ....
-@timeout /T 1 /NOBREAK@
+%win%timeout /T 1 /NOBREAK
 cd %path%
 dir
 pause
@@ -667,7 +667,7 @@ goto :file_modifications
 set /P object=Choose the folder/file name to delete:
 rmdir %object%
 echo folder/file deleted ....
-@timeout /T 1 /NOBREAK@
+%win%timeout /T 1 /NOBREAK
 dir
 pause
 cls
@@ -678,7 +678,7 @@ set /P object_in=Choose the path with folder/file to rename:
 set /P object_out=Choose the new path with folder/file:
 ren %object_in% %object_out%
 echo folder/file renamed ....
-@timeout /T 1 /NOBREAK@
+%win%timeout /T 1 /NOBREAK
 dir
 pause
 cls
@@ -692,8 +692,7 @@ if "%folder_location%" equ "" echo ERROR empty location .... & goto :file_modifi
 cd %folder_location%
 echo moved in %folder_location% ....
 echo loading new location ....
-@timeout /T 1 /NOBREAK
-dir
+%win%timeout /T 1 /NOBREAKdir
 pause
 goto :file_modifications
 
@@ -798,22 +797,22 @@ goto:main_program
 
 :close_session
 echo CLOSING SESSION....
-shutdown -l -f -t 0
+%win%shutdown -l -f -t 0
 goto end
 
 :shutdown_
 echo COMPUTER SHUTDOWN....
-shutdown -s -f -t 0
+%win%shutdown -s -f -t 0
 goto end
 
 :shutdown_after_download
 echo COMPUTER SHUTDOWN IN X HOUR(S)....
 set /P time_in_seconds=Enter the countdown in seconds to close the computer:
 set /A time_in_hours=%time_in_seconds%/3600
-shutdown -s -f -t %time_in_seconds%
+%win%shutdown -s -f -t %time_in_seconds%
 echo instruction launched ....
-echo WARNING! computer is closing in %time_in_hours% ....
-@timeout /T 3 /NOBREAK@
+echo WARNING! computer is closing in %time_in_seconds% seconds %time_in_hours% hours....
+%win%timeout /T 3 /NOBREAK
 goto :end
 
 :shut_and_Restart
