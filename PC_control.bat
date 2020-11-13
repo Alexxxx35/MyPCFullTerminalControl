@@ -15,7 +15,7 @@ ver | find /i "version 10.0.10240" > nul && if %errorlevel%==0 set VERSIONWINDOW
 ver | find /i "version 6.4." > nul && if %errorlevel%==0 set VERSIONWINDOWS=Windows 10 Technical Preview
 echo OPERATING SYSTEM Windows version: %VERSIONWINDOWS%
 echo Started: %date% %time%
-echo ALEX_SOFTWARE Version 1.5
+echo ALEX_SOFTWARE Version 1.6
 echo 2020 ALEX_SOFTWARE Tous droits réservés.
 echo Press F11 for full screen mode
 
@@ -149,7 +149,7 @@ if "%choice%"=="" goto :Navigation_console
 rem if not %choice%=="" set choice=%choice:~0,1%
 if %choice%==1 goto :website_nav
 if %choice%==2 goto :software_nav
-if %choice%==3 start CMD & goto :Navigation_console
+if %choice%==3 start %win%CMD & goto :Navigation_console
 if %choice%==4 cd .. & dir & goto :Navigation_console
 if %choice%==5 goto :move_in0
 if %choice%==6 goto :Video_games_console
@@ -465,7 +465,7 @@ echo  ******************************************************
 echo  ******************************************************
 title= ---- File Command ----
 echo 1 : Create a folder/file
-echo 2 : Delete a folder/file
+echo 2 : Delete a folder/file and all dependancies
 echo 3 : Rename a folder/file
 echo 4 : Edit a file
 echo 5 : Show file content inside terminal (currently in development ...)
@@ -525,7 +525,7 @@ goto :file_modifications
 set /p object_location=Choose the path of folder/file to open:
 echo loading the data of %object_location% ....
 %win%timeout /T 1 /NOBREAK
-start %object_location%
+notepad %object_location%
 echo data of %object_location% loaded ....
 pause
 cls
@@ -664,10 +664,11 @@ cls
 goto :file_modifications
 
 :delete_folder/file
-set /P object=Choose the folder/file name to delete:
-rmdir %object%
-echo folder/file deleted ....
+dir
+set /P object_path=Choose the path of folder to delete..all files inside will be deleted:
+%win%rmdir /s %object_path%
 %win%timeout /T 1 /NOBREAK
+echo folder/file deleted ....
 dir
 pause
 cls
@@ -780,12 +781,18 @@ if %choice%==1 goto :close_session
 if %choice%==2 goto :shutdown_
 if %choice%==3 goto :shutdown_after_download
 if %choice%==4 goto :shut_and_Restart
-if %choice%==5 cls & goto :main_program
-if %choice%==6 goto :need_help
-if %choice%==7 goto :end
-if %choice%==8 goto :command_line_windows2
+if %choice%==5 goto :cancel_shutdown
+if %choice%==6 cls & goto :main_program
+if %choice%==7 goto :need_help
+if %choice%==8 goto :end
+if %choice%==9 goto :command_line_windows2
 )
 echo ERROR %choice% is not configured!
+goto :begin
+
+:cancel_shutdown
+shutdown /a
+echo shutdown of the computer cancelled ....
 goto :begin
 
 :command_line_windows2
@@ -806,7 +813,13 @@ echo COMPUTER SHUTDOWN....
 goto end
 
 :shutdown_after_download
-echo COMPUTER SHUTDOWN IN X HOUR(S)....
+echo COMPUTER SHUTDOWN IN X SECONDS....
+echo 3600=1hours
+echo 7200=2hours
+echo 10800=3hours
+echo 14400=4hours
+echo 18000=5hours
+echo 21600=6hours
 set /P time_in_seconds=Enter the countdown in seconds to close the computer:
 set /A time_in_hours=%time_in_seconds%/3600
 %win%shutdown -s -f -t %time_in_seconds%
