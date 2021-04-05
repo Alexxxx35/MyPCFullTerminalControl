@@ -91,8 +91,8 @@ echo			                                                `:/y+:`   . ```.:/+/:/++`
 echo			                                                        `y/////+/:+//:`                             
 echo			                                                         ://+++//-               
 
-path=D:
-%path%
+cd D:\
+IF ERRORLEVEL EQ 0 (path=D:\) else (path=C:\)
 echo %path%
 pause
 :main_program
