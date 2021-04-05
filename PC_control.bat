@@ -92,7 +92,8 @@ echo			                                                        `y/////+/:+//:`
 echo			                                                         ://+++//-               
 
 cd D:\
-IF ERRORLEVEL EQU 0 (path=D:\) else (path=C:\)
+IF ERRORLEVEL EQU 0 (%diskpath%=D:\) else (%diskpath%=C:\)
+echo %diskpath%
 echo %path%
 pause
 :main_program
@@ -217,7 +218,7 @@ goto :more_info
 
 :move_in0
 dir
-echo %path%
+echo %diskpath%
 set /P folder_location=Choose the location to go in:
 (if "%folder_location%" equ "" echo ERROR empty location .... & goto :Navigation_console)
 cd %folder_location%
@@ -506,7 +507,7 @@ echo ERROR %choice% is not configured!
 goto :file_modifications
 
 :search_data
-echo %path%
+echo %diskpath%
 dir
 set /P file_path=Enter the location of your file or pass:
 (
@@ -638,7 +639,7 @@ cls
 goto :file_modifications
 
 :create_folder/file
-set /P path=Choose the path where to create the new folder/file:
+set /P folder_path=Choose the path where to create the new folder/file:
 set /P object=Choose a name for the new folder/file (without extention):
 set /P ext=Choose an extention if it's a file or pass:
 if "%ext%" == "" goto :create_folder else goto :create_file
@@ -647,7 +648,7 @@ type nul > %object%.%ext%
 pause
 echo file created ....
 %win%timeout /T 1 /NOBREAK
-cd %path%
+cd %folder_path%
 dir
 pause
 cls
@@ -687,7 +688,7 @@ goto :file_modifications
 
 :move_in
 dir
-echo %path%
+echo %diskpath%
 set /P folder_location=Choose the location to go in:
 if "%folder_location%" equ "" echo ERROR empty location .... & goto :file_modifications
 cd %folder_location%
