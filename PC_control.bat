@@ -92,7 +92,7 @@ echo			                                                        `y/////+/:+//:`
 echo			                                                         ://+++//-               
 
 cd D:\
-IF ERRORLEVEL EQ 0 (path=D:\) else (path=C:\)
+IF ERRORLEVEL EQU 0 (path=D:\) else (path=C:\)
 echo %path%
 pause
 :main_program
