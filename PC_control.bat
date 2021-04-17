@@ -717,6 +717,8 @@ title = ---- Process Command ----
 
 echo 1 : Show all tasks in execution
 echo 2 : Kill a task (stop running process)
+echo 33 : Show a network process
+echo 44 : Kill a network task
 echo 3 : Open task manager
 echo 4 : EXIT
 echo 5 : BACK
@@ -725,11 +727,27 @@ set /P choice=Make a choice :
 rem if not %choice%=="" set choice=%choice:~0,1%
 if %choice%==1 goto :show_tasks
 if %choice%==2 goto :kill_task
-if %choice%==3 goto :task_manager
-if %choice%==4 EXIT
-if %choice%==5 cls & goto :main_program
+if %choice%==3 goto :show_network_task
+if %choice%==4 goto :kill_network_task
+if %choice%==5 goto :task_manager
+if %choice%==6 EXIT
+if %choice%==7 cls & goto :main_program
 )
 echo ERROR %choice% is not configured!
+goto :process_control_console
+
+:kill_network_task
+set /P port=Choose the port id to kill his running task
+taskkill /PID 7120 /F
+pause
+cls
+goto :process_control_console
+
+:show_network_task
+set /P port=Choose a port to find his activity:
+netstat -ano | findstr :%port%
+pause
+cls 
 goto :process_control_console
 
 :task_manager
