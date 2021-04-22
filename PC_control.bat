@@ -717,8 +717,8 @@ title = ---- Process Command ----
 
 echo 1 : Show all tasks in execution
 echo 2 : Kill a task (stop running process)
-echo 33 : Show a network process
-echo 44 : Kill a network task
+echo 3 : Show a network process
+echo 4 : Kill a network task
 echo 3 : Open task manager
 echo 4 : EXIT
 echo 5 : BACK
